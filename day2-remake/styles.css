@@ -1,0 +1,28 @@
+body{
+    background-color: #6DD6DA;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+#section{
+    border: 5px dotted red;
+    border-radius: 20px ;
+    margin-top: 20px;
+    padding-left: 18px;
+}
+
+h1 {
+    font-weight: bolder;
+    color: burlywood;
+}
+
+
+#navbar{
+    display: flex;
+    flex-direction: column;
+    
+    gap:20px;
+    align-items: center;
+    border: 1px solid black;
+}
+
