@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Clicker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h1>🍪 Cookie Clicker</h1>
+
+  <div id="username-section">
+    <input type="text" id="username-input" placeholder="Enter your name..." maxlength="20">
+    <button onclick="saveUsername()">Save</button>
+    <p id="welcome-msg" style="color: #b5651d; font-weight: bold;"></p>
+  </div>
+
+  <div id="cookie-count">Cookies: 0</div>
+  <div id="click-power-display" style="color: #888; font-size: 0.9rem;">+1 per click</div>
+
+  <br>
+  <button id="cookie-btn" onclick="clickCookie()">🍪</button>
+
+  <h2>Upgrades</h2>
+  <div id="upgrades">
+    <button class="upgrade-btn" id="btn-cursor" onclick="buyUpgrade('cursor')">
+      👆 Better Cursor — +1 per click<br><small>Cost: 10 cookies</small>
+    </button>
+    <button class="upgrade-btn" id="btn-grandma" onclick="buyUpgrade('grandma')">
+      👵 Grandma — +5 per click<br><small>Cost: 50 cookies</small>
+    </button>
+    <button class="upgrade-btn" id="btn-farm" onclick="buyUpgrade('farm')">
+      🌾 Cookie Farm — +20 per click<br><small>Cost: 200 cookies</small>
+    </button>
+  </div>
+
+  <h2>Milestones</h2>
+  <div id="milestones">
+    <div class="milestone" id="m-10">🌱 First Taste — Bake 10 cookies</div>
+    <div class="milestone" id="m-100">🍪 Cookie Connoisseur — Bake 100 cookies</div>
+    <div class="milestone" id="m-1000">🎉 Cookie Party — Bake 1,000 cookies</div>
+  </div>
+
+<script src="scripts.js"></script>
+</body>
+</html>

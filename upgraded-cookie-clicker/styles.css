@@ -1,0 +1,95 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #fdf6e3;
+  padding: 30px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #b5651d;
+}
+
+#cookie-count {
+  font-size: 1.8rem;
+  margin: 10px 0;
+}
+
+#cookie-btn {
+  font-size: 5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+#cookie-btn:active {
+  transform: scale(0.9);
+}
+
+/* USERNAME */
+#username-section {
+  margin: 20px 0;
+}
+
+#username-section input {
+  padding: 6px 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#username-section button {
+  padding: 6px 14px;
+  font-size: 1rem;
+  margin-left: 6px;
+  cursor: pointer;
+  background-color: #b5651d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+/* UPGRADES */
+h2 {
+  margin-top: 30px;
+  color: #555;
+}
+
+.upgrade-btn {
+  display: inline-block;
+  margin: 8px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  background-color: #fff3cd;
+  border: 2px solid #e0a800;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.upgrade-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* MILESTONES */
+#milestones {
+  margin-top: 30px;
+  display: inline-block;
+  text-align: left;
+}
+
+.milestone {
+  padding: 8px 14px;
+  margin: 6px 0;
+  border-radius: 6px;
+  background-color: #eee;
+  color: #999;
+  font-size: 0.95rem;
+}
+
+.milestone.unlocked {
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
+}
