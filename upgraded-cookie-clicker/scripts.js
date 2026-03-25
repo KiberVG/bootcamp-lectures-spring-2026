@@ -4,6 +4,8 @@ let totalBaked = 0;
 let clickPower = 1;
 let username = "";
 
+let backendLink = "http://localhost:8000";
+
 // Keeping track of our upgrades all in one place
 const upgrades = {
   cursor: { cost: 10, power: 1, bought: false },
@@ -78,8 +80,9 @@ function saveUsername() {
   username = val;
   document.getElementById("welcome-msg").textContent =
     "Welcome, " + username + "!";
-  // TODO: send username to backend
-  // fetch('/api/user', { method: 'POST', body: JSON.stringify({ username }) });
+
+  sendUsernameBackend();
+
 }
 
 // ── Display ────────────────────────────────────────────────────────────────
@@ -90,8 +93,23 @@ function updateDisplay() {
   updateUpgradeButtons();
 }
 
+// async function getUsernameBackend() {
+//     let data = await fetch(backendLink + "/username", );
+//     let datajson = await data.json();
+
+//     let username = datajson['username']
+//     console.log(username)
+// }
+
+async function sendUsernameBackend() {
+    await fetch(backendLink + "/username/" + username, { method: 'POST'});
+
+}
+
 // ── Init
 
 // Anything outside of functions will just run when the website loads. 
 // So be careful about what you leave outside of functions, we want this here because we want to set everything to zero
 updateDisplay();
+
+// getUsernameBackend()

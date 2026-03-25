@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who's That Pokémon? Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --poke-red: #ef5350;
+            --poke-blue: #2a75bb;
+            --poke-yellow: #ffcb05;
+            --poke-dark-blue: #3c5aa6;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .game-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 4px solid var(--poke-dark-blue);
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            color: var(--poke-red);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .sprite-container {
+            position: relative;
+            background: radial-gradient(circle, #fff 0%, #ddd 100%);
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--poke-yellow);
+        }
+
+        #pokemon-image {
+            width: 180px;
+            height: 180px;
+            image-rendering: pixelated;
+            transition: filter 0.5s ease;
+        }
+
+        /* The silhouette effect */
+        .silhouette {
+            filter: brightness(0) contrast(100%);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        button {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            padding: 15px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--poke-blue);
+            color: white;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--poke-dark-blue);
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button.correct {
+            background-color: #4caf50 !important;
+        }
+
+        button.wrong {
+            background-color: #f44336 !important;
+        }
+
+        .stats {
+            margin-top: 1rem;
+            font-size: 0.7rem;
+        }
+
+        #next-btn {
+            background-color: var(--poke-yellow);
+            color: var(--poke-dark-blue);
+            margin-top: 1rem;
+            width: 100%;
+            display: none;
+        }
+
+        .loading {
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>WHO'S THAT POKÉMON?</h1>
+        
+        <div class="sprite-container">
+            <img id="pokemon-image" src="" alt="Pokemon" class="silhouette">
+        </div>
+
+        <div id="loading-text" class="loading">Fetching data from Johto...</div>
+
+        <div class="options-grid" id="options">
+            </div>
+
+        <button id="next-btn">NEXT ROUND</button>
+
+        <div class="stats">
+            SCORE: <span id="score">0</span> | STREAK: <span id="streak">0</span>
+        </div>
+    </div>
+
+    <script>
+        const image = document.getElementById('pokemon-image');
+        const optionsContainer = document.getElementById('options');
+        const nextBtn = document.getElementById('next-btn');
+        const loadingText = document.getElementById('loading-text');
+        const scoreEl = document.getElementById('score');
+        const streakEl = document.getElementById('streak');
+
+        let score = 0;
+        let streak = 0;
+        let currentPokemon = null;
+        let allPokemonList = [];
+
+        // 1. Initial Load: Get a list of all Pokemon names to use for distractors
+        async function initGame() {
+            try {
+                // Fetch first 1025 Pokemon (Gen 1-9)
+                const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
+                const data = await response.json();
+                allPokemonList = data.results;
+                loadNewRound();
+            } catch (error) {
+                loadingText.innerText = "Error loading API. Try refreshing.";
+                console.error(error);
+            }
+        }
+
+        // 2. Start a new round
+        async function loadNewRound() {
+            // Reset UI
+            nextBtn.style.display = 'none';
+            optionsContainer.innerHTML = '';
+            loadingText.style.display = 'block';
+            image.style.display = 'none';
+            image.classList.add('silhouette');
+
+            // Pick a random Pokemon ID
+            const randomId = Math.floor(Math.random() * 1025) + 1;
+            
+            try {
+                // Fetch specific Pokemon data
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+                const pokemon = await response.json();
+                
+                currentPokemon = {
+                    name: pokemon.name,
+                    image: pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default
+                };
+
+                // Create options (1 correct, 3 random)
+                const choices = [currentPokemon.name];
+                while (choices.length < 4) {
+                    const randomDistractor = allPokemonList[Math.floor(Math.random() * allPokemonList.length)].name;
+                    if (!choices.includes(randomDistractor)) {
+                        choices.push(randomDistractor);
+                    }
+                }
+
+                // Shuffle options
+                choices.sort(() => Math.random() - 0.5);
+
+                // Update UI
+                image.src = currentPokemon.image;
+                image.onload = () => {
+                    loadingText.style.display = 'none';
+                    image.style.display = 'block';
+                    renderOptions(choices);
+                };
+
+            } catch (error) {
+                console.error("Failed to fetch Pokemon:", error);
+                loadNewRound(); // try again
+            }
+        }
+
+        // 3. Render buttons
+        function renderOptions(choices) {
+            choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.innerText = choice.toUpperCase();
+                btn.onclick = () => handleGuess(choice, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        // 4. Handle user guess
+        function handleGuess(choice, selectedBtn) {
+            const buttons = optionsContainer.querySelectorAll('button');
+            buttons.forEach(btn => btn.disabled = true);
+
+            image.classList.remove('silhouette');
+            nextBtn.style.display = 'block';
+
+            if (choice === currentPokemon.name) {
+                selectedBtn.classList.add('correct');
+                score += 10;
+                streak++;
+                scoreEl.innerText = score;
+                streakEl.innerText = streak;
+            } else {
+                selectedBtn.classList.add('wrong');
+                streak = 0;
+                streakEl.innerText = streak;
+                // Highlight the correct one
+                buttons.forEach(btn => {
+                    if (btn.innerText.toLowerCase() === currentPokemon.name) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+        }
+
+        nextBtn.onclick = loadNewRound;
+
+        // Run the game
+        initGame();
+    </script>
+</body>
+</html>
