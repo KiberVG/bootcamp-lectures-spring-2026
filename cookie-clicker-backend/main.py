@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+
 app = FastAPI()
 
-global_username = ""
+global_username = "kimber"
 
 origins = [
     "http://localhost",
@@ -28,7 +29,7 @@ async def root():
 
 @app.get("/username")
 async def username():
-    return {"username": "kimberg"}
+    return {"username": global_username}
 
 @app.post("/username/{username}")
 async def post_username(username):
@@ -36,3 +37,4 @@ async def post_username(username):
     global_username = username
     print(global_username)
     return {"username": username}
+

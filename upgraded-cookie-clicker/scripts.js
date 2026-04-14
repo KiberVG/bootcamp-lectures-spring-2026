@@ -74,14 +74,9 @@ function checkMilestones() {
 }
 
 // ── Username ───────────────────────────────────────────────────────────────
-function saveUsername() {
-  const val = document.getElementById("username-input").value.trim();
-  if (!val) return;
-  username = val;
+async function saveUsername() {
   document.getElementById("welcome-msg").textContent =
     "Welcome, " + username + "!";
-
-  sendUsernameBackend();
 
 }
 
@@ -93,13 +88,16 @@ function updateDisplay() {
   updateUpgradeButtons();
 }
 
-// async function getUsernameBackend() {
-//     let data = await fetch(backendLink + "/username", );
-//     let datajson = await data.json();
+async function getUsernameBackend() {
+    let data = await fetch(backendLink + "/username");
+    let datajson = await data.json();
 
-//     let username = datajson['username']
-//     console.log(username)
-// }
+    let username2 = datajson['username'] 
+    console.log(username2)
+    username = username2
+    document.getElementById("welcome-msg").textContent =
+    "Welcome, " + username + "!";
+}
 
 async function sendUsernameBackend() {
     await fetch(backendLink + "/username/" + username, { method: 'POST'});
@@ -110,6 +108,6 @@ async function sendUsernameBackend() {
 
 // Anything outside of functions will just run when the website loads. 
 // So be careful about what you leave outside of functions, we want this here because we want to set everything to zero
+getUsernameBackend()
 updateDisplay();
-
-// getUsernameBackend()
+saveUsername();

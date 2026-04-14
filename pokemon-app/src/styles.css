@@ -1,0 +1,130 @@
+:root {
+  font-family: "Arial", sans-serif;
+  color: #1f2937;
+  background-color: #f3f4f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 24px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.game-card,
+.captured-card {
+  background: white;
+  border: 2px solid #1f2937;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+h1,
+h2 {
+  margin-top: 0;
+}
+
+.sprite-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 220px;
+  margin: 16px 0;
+}
+
+.pokemon-image {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  transition: filter 0.3s;
+}
+
+.silhouette {
+  filter: brightness(0);
+}
+
+.choices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.choice-button,
+.next-button,
+.remove-button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.choice-button {
+  background: #2563eb;
+  color: white;
+}
+
+.choice-button.correct {
+  background: #16a34a;
+}
+
+.choice-button.wrong {
+  background: #dc2626;
+}
+
+.choice-button:disabled {
+  opacity: 0.85;
+  cursor: not-allowed;
+}
+
+.next-button {
+  margin-top: 14px;
+  width: 100%;
+  background: #fbbf24;
+  color: #111827;
+}
+
+.stats {
+  margin-top: 14px;
+}
+
+.captured-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.captured-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.remove-button {
+  background: #ef4444;
+  color: white;
+}
+
+.loading-text,
+.empty-captured,
+.error-message {
+  color: #4b5563;
+}
+
+.error-message {
+  color: #b91c1c;
+}
