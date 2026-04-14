@@ -1,0 +1,101 @@
+.app-shell {
+  max-width: 760px;
+  margin: 2rem auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+  padding: 1.5rem;
+}
+
+header h1 {
+  margin: 0 0 1rem;
+  font-size: 1.8rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  text-decoration: none;
+  color: #1f2937;
+  border: 1px solid #cbd5e1;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.tab-active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.notes-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.note-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+  background: #f8fafc;
+}
+
+.note-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.note-card p {
+  margin: 0 0 0.6rem;
+  white-space: pre-wrap;
+}
+
+.note-card small {
+  color: #6b7280;
+}
+
+.empty-state {
+  color: #4b5563;
+}
+
+.note-form {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.note-form label {
+  font-weight: 600;
+}
+
+.note-form input,
+.note-form textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.65rem;
+  font: inherit;
+}
+
+.note-form button {
+  justify-self: start;
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.error-message {
+  margin: 0;
+  color: #dc2626;
+  font-size: 0.9rem;
+}
